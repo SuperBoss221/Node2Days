@@ -6,6 +6,6 @@ git commit -m "ข้อความ"
 
 อัพงานที่แก้ไข github
 git push
-
+ 
 git status
 ้
