@@ -8,6 +8,11 @@ const key = "boss";
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 
+// Mongo DB
+const mongo = require("./connectMongo");
+const client = mongo.client;
+const db = mongo.db;
+
 app.use(cors());
 app.use(fileUpload({ limits: { fileSize: 1 * 1024 * 1024 } })); // 50mb
 app.use("/image", express.static("uploads"));
@@ -55,7 +60,43 @@ app.post("/upload", (req, res) => {
     res.status(401).send(e.message);
   }
 });
-//////// upload views
+
+//////// MongoDB GET
+app.get("/mdb", async (req, res) => {
+  try {
+    await client.connect();
+    const obj = client.db(db);
+    /*  Search Name = admin
+    const rows = await obj
+      .collection("member")
+      .find({ name: "admin" })
+      .toArray();
+    */
+    /*
+    Search 2 Part
+    const rows = await obj
+      .collection("member")
+      .find({ "data.name": "admin" })
+      .toArray();
+    */
+    const rows = await obj.collection("member").find().toArray();
+    return res.send(rows);
+  } catch (err) {
+    res.status(501).send("err:" + err.message);
+  }
+});
+
+//////// MongoDB POST
+app.post("/mdb", async (req, res) => {
+  try {
+    await client.connect();
+    const obj = client.db(db);
+    const rows = await obj.collection("member").insertOne(req.body);
+    return res.send(rows);
+  } catch (err) {
+    res.status(501).send("err:" + err.message);
+  }
+});
 
 app.post("/signin", (req, res) => {
   memberControllers.signIn(req, res);
