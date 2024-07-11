@@ -10,6 +10,7 @@ const fileUpload = require("express-fileupload");
 
 // Mongo DB
 const mongo = require("./connectMongo");
+const { ObjectId } = require("mongodb");
 const client = mongo.client;
 const db = mongo.db;
 
@@ -79,7 +80,7 @@ app.get("/mdb", async (req, res) => {
       .find({ "data.name": "admin" })
       .toArray();
     */
-    const rows = await obj.collection("member").find().toArray();
+    const rows = await obj.collection("member").find().limit(1).toArray();
     return res.send(rows);
   } catch (err) {
     res.status(501).send("err:" + err.message);
@@ -93,6 +94,21 @@ app.post("/mdb", async (req, res) => {
     const obj = client.db(db);
     const rows = await obj.collection("member").insertOne(req.body);
     return res.send(rows);
+  } catch (err) {
+    res.status(501).send("err:" + err.message);
+  }
+});
+//////// MongoDB UPDATE
+app.put("/mdb/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    await client.connect();
+    const obj = client.db(db);
+    const rows = await obj
+      .collection("member")
+      .updateOne({ _id: new ObjectId(id) }, { $set: req.body });
+
+    return res.send({ update: rows.modifiedCount });
   } catch (err) {
     res.status(501).send("err:" + err.message);
   }
