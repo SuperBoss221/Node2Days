@@ -1,6 +1,6 @@
 module.exports = {
   list: (req, res) => {
-    return res.send("List");
+    return res.send("OK MAIN");
   },
   search: (req, res) => {
     return res.send("search");
