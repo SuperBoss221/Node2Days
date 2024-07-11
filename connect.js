@@ -5,7 +5,7 @@ const mysql = require("mysql2/promise");
 const pool = mysql.createPool({
   host: atob("bG9jYWxob3N0"),
   user: "root",
-  database: "member",
+  database: "tb_member",
   waitForConnections: true,
   connectionLimit: 1000,
   maxIdle: 100, // max idle connections, the default value is the same as `connectionLimit`
