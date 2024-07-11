@@ -33,10 +33,6 @@ function isSignIn(req, res, next) {
   }
 }
 
-app.get("/", (req, res) => {
-  res.send("Hello Node");
-});
-
 //////// uploadfile
 app.post("/upload", (req, res) => {
   try {
