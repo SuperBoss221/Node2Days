@@ -80,7 +80,7 @@ app.get("/mdb", async (req, res) => {
       .find({ "data.name": "admin" })
       .toArray();
     */
-    const rows = await obj.collection("member").find().limit(1).toArray();
+    const rows = await obj.collection("member").find().limit(10).toArray();
     return res.send(rows);
   } catch (err) {
     res.status(501).send("err:" + err.message);
