@@ -28,8 +28,8 @@ function isSignIn(req, res, next) {
     } else {
       return res.status(401).send("error");
     }
-  } catch (e) {
-    res.status(401).send(e.message);
+  } catch (error) {
+    res.status(401).send(error.message);
   }
 }
 
@@ -38,7 +38,7 @@ app.post("/upload", (req, res) => {
   try {
     if (req.files != undefined) {
       const img = req.files.img;
-      const ext = img.name.split("."); // แยกคำค้นหา (.)
+      const ext = img.name.split("."); // แยกคำค้นหา2222 (.)
       const currentExt = ext[ext.length - 1]; // นามสกุล (นับสุดท้าย)
       const NewName = `${img.md5}.${currentExt}`; // ชื่อไฟล์ใหม่
       //console.log(img);
