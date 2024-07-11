@@ -28,8 +28,8 @@ function isSignIn(req, res, next) {
     } else {
       return res.status(401).send("error");
     }
-  } catch (e) {
-    res.status(401).send(e.message);
+  } catch (error) {
+    res.status(401).send(error.message);
   }
 }
 
